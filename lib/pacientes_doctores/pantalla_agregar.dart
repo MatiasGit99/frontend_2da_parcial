@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
-import 'package:frontend_2da_parcial/pacientes_doctores/screen.dart';
+import 'package:frontend_2da_parcial/pacientes_doctores/pantalla_principal.dart';
 
 class AgregarPacienteDoctorForm extends StatefulWidget {
   @override

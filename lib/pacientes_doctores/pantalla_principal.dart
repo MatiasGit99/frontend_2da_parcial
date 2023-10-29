@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
-import 'package:frontend_2da_parcial/pacientes_doctores/form.dart';
+import 'package:frontend_2da_parcial/pacientes_doctores/pantalla_agregar.dart';
 
 class AdministracionPacientesDoctoresScreen extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/administracion_categorias/model.dart'; // Importa el modelo de Categoría
 import 'package:frontend_2da_parcial/administracion_categorias/actions.dart'; // Importa el modelo de Categoría
-import 'package:frontend_2da_parcial/administracion_categorias/screen.dart'; // Importa el modelo de Categoría
+import 'package:frontend_2da_parcial/administracion_categorias/pantalla_principal.dart'; // Importa el modelo de Categoría
 
 class AgregarCategoriaForm extends StatefulWidget {
   @override

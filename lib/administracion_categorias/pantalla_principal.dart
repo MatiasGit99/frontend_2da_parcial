@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/administracion_categorias/model.dart';
 import 'package:frontend_2da_parcial/administracion_categorias/actions.dart';
-import 'package:frontend_2da_parcial/administracion_categorias/form.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/pantalla_agregar.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/pantalla_editar.dart';
 
 class AdministracionCategoriasScreen extends StatefulWidget {
   @override
@@ -81,7 +82,14 @@ class _AdministracionCategoriasScreenState
                       IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          updateCategoria(categoria);
+                          // Obtén la categoría que deseas editar, puedes hacerlo a través de una consulta a la base de datos o como lo necesites.
+                          final categoriaAEditar = Categoria(
+                          idCategoria: categoria.idCategoria,// asigna el ID de la categoría que deseas editar,
+                          descripcion: categoria.descripcion,);
+
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                            return EditarCategoriaScreen(categoria: categoriaAEditar); // Pasa la categoría a editar a la pantalla de edición
+                          }));
                         },
                       ),
                       IconButton(

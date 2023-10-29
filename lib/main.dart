@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'administracion_categorias/screen.dart';
-import 'pacientes_doctores/screen.dart';
-import 'add_client_screen.dart';
-import 'client_model.dart';
-import 'database.dart';
+import 'administracion_categorias/pantalla_principal.dart';
+import 'pacientes_doctores/pantalla_principal.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,12 +23,10 @@ class ClientListScreen extends StatefulWidget {
 }
 
 class _ClientListScreenState extends State<ClientListScreen> {
-  late Future<List<Client>> clients;
 
   @override
   void initState() {
     super.initState();
-    clients = ClientDatabaseProvider.db.getAllClients();
   }
 
   @override
@@ -76,14 +71,14 @@ class _ClientListScreenState extends State<ClientListScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            return AddClientScreen();
-          }));
-        },
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      //       return AddClientScreen();
+      //     }));
+      //   },
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }
