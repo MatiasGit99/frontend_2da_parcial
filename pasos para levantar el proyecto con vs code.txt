@@ -1,0 +1,16 @@
+
+video de referencia:
+https://www.youtube.com/watch?v=-z1DcFsZlpc&t=810s
+
+entrar a un proyecto de andorid studio
+configuraciones / languages and frameworks/ android sdk/ sdk tools/ activar 'Android sdk command line' apply
+
+al crear un dispositivo en andorid en la pestaña 'x86 images' e instalar API34 si en recommended elegirmos api34
+
+entrar al cmd como adminstrador y ejecutar
+flutter doctor
+flutter doctor --android -licenses
+start ms-settings:developers
+
+ir a vscode y en la esquina inferior derecha seleccionar el dispositivo android
+clic sobre main.dart y seleccionar run without debugging
