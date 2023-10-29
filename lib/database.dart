@@ -14,7 +14,6 @@ class ClientDatabaseProvider {
   }
 
   Future<void> _initDatabase() async {
-            print("SPIERD");
 
     final directory = await getApplicationDocumentsDirectory();
     final path = join(directory.path, "clients.db");
@@ -29,13 +28,7 @@ class ClientDatabaseProvider {
   }
 
   Future<Database> get database async {
-    print("AAAAAAAAAA");
-        print("MMMMM");
-
-
     await _initDatabase();
-            print("AARRRRRRRRRRRRRRAAAAAAAA");
-
     return _database;
   }
 
@@ -50,10 +43,7 @@ class ClientDatabaseProvider {
   }
 
   Future<List<Client>> getAllClients() async {
-    print("BRUTAL");
     final db = await database;
-        print("RADICAL");
-
     try {
       final maps = await db.query('Clients');
       return List.generate(maps.length, (index) {

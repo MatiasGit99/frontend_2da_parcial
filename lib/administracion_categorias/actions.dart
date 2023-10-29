@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'administracion_categorias_model.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/model.dart';
 
 class CategoriaDatabaseProvider {
   Database? _database;

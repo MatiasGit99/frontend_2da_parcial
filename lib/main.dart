@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'administracion_categorias/administracion_categorias_screen.dart';
+import 'administracion_categorias/screen.dart';
+import 'pacientes_doctores/screen.dart';
 import 'add_client_screen.dart';
 import 'client_model.dart';
 import 'database.dart';
@@ -53,6 +54,9 @@ class _ClientListScreenState extends State<ClientListScreen> {
             ),
             ElevatedButton(
               onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return AdministracionPacientesDoctoresScreen(); // Navegar a la nueva pantalla
+                }));
                 // Acción para 'Administración de pacientes y doctores'
               },
               child: Text('Administración de pacientes y doctores'),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'administracion_categorias_model.dart';
-import 'administracion_categorias_db.dart';
-import 'administracion_categorias_form.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/model.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/actions.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/form.dart';
 
 class AdministracionCategoriasScreen extends StatefulWidget {
   @override
