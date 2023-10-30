@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_2da_parcial/reserva_turnos/pantalla_principal.dart';
 import 'administracion_categorias/pantalla_principal.dart';
 import 'pacientes_doctores/pantalla_principal.dart';
 
@@ -58,7 +59,9 @@ class _ClientListScreenState extends State<ClientListScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Acción para 'Reserva de turnos'
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return ReservaTurnosScreen(); // Navegar a la nueva pantalla
+                }));// Acción para 'Reserva de turnos'
               },
               child: Text('Reserva de turnos'),
             ),

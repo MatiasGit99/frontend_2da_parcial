@@ -34,6 +34,24 @@ class PacienteDoctorDatabaseProvider {
     );
   }
 
+  Future<List<PacienteDoctor>> getAllDoctores() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query('pacientes_doctores', where: 'flagEsDoctor = ?', whereArgs:[1]);
+    return List.generate(maps.length, (index) {
+      return PacienteDoctor.fromJson(maps[index]);
+    });
+  }
+
+  Future<List<PacienteDoctor>> getAllPacientes() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query('pacientes_doctores', where: 'flagEsDoctor = ?', whereArgs:[0]);
+    return List.generate(maps.length, (index) {
+      return PacienteDoctor.fromJson(maps[index]);
+    });
+  }
+
   Future<void> insertPacienteDoctor(PacienteDoctor pacienteDoctor) async {
     final db = await database;
     print("NONONON");
