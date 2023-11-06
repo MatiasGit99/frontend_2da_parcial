@@ -17,12 +17,15 @@ class TurnoDatabaseProvider {
     return await openDatabase(
       path,
       version: 1,
+      onConfigure: (db) {
+        db.execute('PRAGMA foreign_keys = ON');
+      },
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE turnos(
             idTurno INTEGER PRIMARY KEY AUTOINCREMENT,
-            paciente TEXT,
-            doctor TEXT,
+            idPaciente INTEGER,
+            idDoctor INTEGER,
             fecha TEXT,
             horario TEXT
           )

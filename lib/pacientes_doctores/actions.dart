@@ -69,6 +69,21 @@ class PacienteDoctorDatabaseProvider {
     });
   }
 
+  Future<PacienteDoctor?> getPacienteDoctorById(int id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'pacientes_doctores',
+      where: 'idPersona = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return PacienteDoctor.fromJson(maps.first);
+    } else {
+      return null; // Si no se encontró ningún PacienteDoctor con ese ID
+    }
+  }
+
   Future<void> updatePacienteDoctor(PacienteDoctor pacienteDoctor) async {
     final db = await database;
     await db.update(

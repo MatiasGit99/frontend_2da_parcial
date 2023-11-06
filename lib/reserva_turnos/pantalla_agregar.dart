@@ -127,7 +127,10 @@ class _AgregarTurnoFormState extends State<AgregarTurnoForm> {
             ElevatedButton(
               onPressed: () {
                 // Guardar la nuevo categoría en la base de datos.
-                final nuevoTurno = Turno(paciente: pacienteSeleccionado, doctor: doctorSeleccionado, fecha: fechaSeleccionadaController, horario: horarioSeleccionado);
+                int paciente = pacienteSeleccionado!.idPersona!;
+                int doctor = doctorSeleccionado!.idPersona!;
+                var horario = horarioSeleccionado!.toString();
+                final nuevoTurno = Turno(paciente: paciente, doctor: doctor, fecha: fechaSeleccionadaController, horario: horario);
                 TurnoDatabaseProvider().insertTurno(nuevoTurno);
 
                 // Después de la inserción, navega a la pantalla de administración de categorías

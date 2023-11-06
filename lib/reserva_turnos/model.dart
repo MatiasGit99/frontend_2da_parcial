@@ -2,8 +2,8 @@ import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 
 class Turno {
   int? idTurno;
-  PacienteDoctor paciente;
-  PacienteDoctor doctor;
+  int paciente;
+  int doctor;
   DateTime fecha;
   String horario;
 
@@ -17,16 +17,16 @@ class Turno {
 
   factory Turno.fromJson(Map<String, dynamic> json) => Turno(
         idTurno: json['idTurno'],
-        paciente: json['paciente'],
-        doctor: json['doctor'],
+        paciente: json['idPaciente'],
+        doctor: json['idDoctor'],
         fecha: DateTime.parse(json['fecha']),
         horario: json['horario'],
       );
 
   Map<String, dynamic> toJson() => {
         'idTurno': idTurno,
-        'paciente': paciente,
-        'doctor': doctor,
+        'idPaciente': paciente,
+        'idDoctor': doctor,
         'fecha': fecha.toIso8601String(),
         'horario': horario,
       };

@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
+import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/model.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/pantalla_agregar.dart';
 
 class ReservaTurnosScreen extends StatefulWidget {
+  set doctorSelect(String doctorSelect) {}
+
+  set pacienteSelect(String pacienteSelect) {}
+
   @override
   _ReservaTurnosScreenState createState() => _ReservaTurnosScreenState();
 }
 
 class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
   List<Turno> turnos = [];
-
+  var pacienteSelect = "";
+  var doctorSelect = "";
   @override
   void initState() {
     super.initState();
+    widget.pacienteSelect = "";
+    widget.doctorSelect = "";
     getTurnos();
   }
 
@@ -23,6 +32,22 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
       turnos = listaTurnos;
     });
   }
+
+  // Función asincrónica para obtener el PacienteDoctor por su ID
+    Future<void> obtenerPacientePorId(int idPaciente) async {
+      final pacienteDoctor = await PacienteDoctorDatabaseProvider().getPacienteDoctorById(idPaciente);
+      setState(() {
+        this.pacienteSelect = (pacienteDoctor!.nombre +" "+ pacienteDoctor!.apellido)!;
+      });
+    }
+
+    // Función asincrónica para obtener el Médico por su ID
+    Future<void> obtenerMedicoPorId(int idDoctor) async {
+      final medico = await PacienteDoctorDatabaseProvider().getPacienteDoctorById(idDoctor);
+      setState(() {
+        doctorSelect = (medico!.nombre +" "+ medico!.apellido)!;
+      });
+    }
 
   // Future<void> insertTurno() async {
   //   final nuevaTurno =
@@ -59,9 +84,13 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
               itemCount: turnos.length,
               itemBuilder: (BuildContext context, index) {
                 final turno = turnos[index];
+                obtenerPacientePorId(turno.paciente);
+                obtenerMedicoPorId(turno.doctor);
                 return ListTile(
-                  title: Text('Paciente: ${turno.paciente}'),
-                  subtitle: Text('Médico: ${turno.doctor}'),
+                  title: Text(
+                      'Paciente: $pacienteSelect'),
+                  subtitle:
+                      Text('Médico: $doctorSelect'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
