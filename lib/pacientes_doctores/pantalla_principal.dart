@@ -18,6 +18,7 @@ class _AdministracionPacientesDoctoresScreenState
   List<PacienteDoctor> pacientesDoctores = [];
   List<PacienteDoctor> pacientesDoctoresFiltrados = [];
   String selectedFilter = 'Nombre';
+  bool mostrarSoloDoctores = false;
 
   @override
   void initState() {
@@ -64,6 +65,10 @@ class _AdministracionPacientesDoctoresScreenState
   void filterCategorias(String searchText) {
     setState(() {
       pacientesDoctoresFiltrados = pacientesDoctores.where((pacientesDoctores) {
+        if (mostrarSoloDoctores && pacientesDoctores.flagEsDoctor != 1) {
+          return false;
+        }
+
         if (selectedFilter == 'Nombre') {
           return pacientesDoctores.nombre
               .toLowerCase()
@@ -173,6 +178,23 @@ class _AdministracionPacientesDoctoresScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+                      ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return AgregarPacienteDoctorForm();
+                }));
+              },
+              child: Text('Agregar Paciente o Doctor'),
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size(200, 48)),
+              ),
+            ),
+            TextField(
+              onChanged: (value) {
+                filterCategorias(value);
+              },
+              decoration: InputDecoration(labelText: 'Buscar'),
+            ),
             Row(
               children: [
                 Text('Filtrar por:'),
@@ -193,25 +215,20 @@ class _AdministracionPacientesDoctoresScreenState
                     );
                   }).toList(),
                 ),
+                SizedBox(width: 16), // Espaciado para separar los elementos
+                Checkbox(
+                  value: mostrarSoloDoctores,
+                  onChanged: (value) {
+                    setState(() {
+                      mostrarSoloDoctores = value!;
+                      filterCategorias('');
+                    });
+                  },
+                ),
+                Text('Mostrar solo Doctores'),
               ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return AgregarPacienteDoctorForm();
-                }));
-              },
-              child: Text('Agregar Paciente o Doctor'),
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(Size(200, 48)),
-              ),
-            ),
-            TextField(
-              onChanged: (value) {
-                filterCategorias(value);
-              },
-              decoration: InputDecoration(labelText: 'Buscar'),
-            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

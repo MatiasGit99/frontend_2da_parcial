@@ -14,3 +14,13 @@ start ms-settings:developers
 
 ir a vscode y en la esquina inferior derecha seleccionar el dispositivo android
 clic sobre main.dart y seleccionar run without debugging
+
+---Pasos para  instalar el pdf y excel reader en el emulador de android studio
+1- Descargar el apk en la computadora
+https://m.apkpure.com/es/office-reader-pdf-word-excel/net.sjava.officereader/download#google_vignette
+2- Cambiar el nombre del archivo a reader.apk  (por el conflicto que se genera a partir del espacio en el nombre)
+3- ir a la carpeta C:\Users\<insertar nombre del usuario>\AppData\Local\Android\Sdk\platform-tools
+4- Pegar el apk en esa ubicacion
+5- abrir el cmd con permisos en esa ubicacion
+6- ejecutar el comando adb install "nombre del apk"
+        Ejemplo: adb install reader.apk
