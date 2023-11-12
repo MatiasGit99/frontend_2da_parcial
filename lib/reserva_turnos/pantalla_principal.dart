@@ -4,6 +4,7 @@ import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/model.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/pantalla_agregar.dart';
+import 'package:intl/intl.dart';
 
 class ReservaTurnosScreen extends StatefulWidget {
   set doctorSelect(String doctorSelect) {}
@@ -90,7 +91,7 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
                   title: Text(
                       'Paciente: $pacienteSelect'),
                   subtitle:
-                      Text('Médico: $doctorSelect'),
+                      Text('Médico: $doctorSelect Fecha-Hora: ${DateFormat('dd/MM/yyyy').format(turno.fecha)} - ${turno.horario}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
