@@ -15,7 +15,9 @@ class AgregarFichaClinicaForm extends StatefulWidget {
 }
 
 class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
-  final TextEditingController descripcionController = TextEditingController();
+  final TextEditingController motivoController = TextEditingController();
+  final TextEditingController observacionController = TextEditingController();
+  final TextEditingController diagnosticoController = TextEditingController();
   DateTime fechaDesdeSeleccionada = DateTime.now();
   DateTime fechaHastaSeleccionada = DateTime.now();
   PacienteDoctor? doctorSeleccionado;
@@ -150,6 +152,18 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
                 ),
               ],
             ),
+            TextField(
+              controller: motivoController,
+              decoration: InputDecoration(labelText: 'Motivo de Consulta'),
+            ),
+            TextField(
+              controller: observacionController,
+              decoration: InputDecoration(labelText: 'Observación'),
+            ),
+            TextField(
+              controller: diagnosticoController,
+              decoration: InputDecoration(labelText: 'Diagnóstico'),
+            ),
             ElevatedButton(
               onPressed: () {
                 // Guardar la nueva ficha clínica en la base de datos.
@@ -163,12 +177,9 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
                 final nuevaFichaClinica = FichaClinica(
                   fechaDesde: fechaDesdeSeleccionada,
                   fechaHasta: fechaHastaSeleccionada,
-                  motivoConsulta:
-                      'Motivo de Consulta', // Puedes modificar este valor según tus necesidades
-                  observacion:
-                      'Observación', // Puedes modificar este valor según tus necesidades
-                  diagnostico:
-                      'Diagnóstico', // Puedes modificar este valor según tus necesidades
+                  motivoConsulta: motivoController.text,
+                  observacion: observacionController.text,
+                  diagnostico: diagnosticoController.text,
                   idDoctor: doctor,
                   idPaciente: paciente,
                   idCategoria: categoria,

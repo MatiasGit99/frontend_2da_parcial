@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/pantalla_agregar.dart';
+import 'package:frontend_2da_parcial/pacientes_doctores/pantalla_editar.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:excel/excel.dart';
@@ -249,35 +250,40 @@ class _AdministracionPacientesDoctoresScreenState
             ),
             // Aquí puedes mostrar la lista de pacientes y doctores.
             ListView.builder(
-              shrinkWrap: true,
-              itemCount: pacientesDoctoresFiltrados.length,
-              itemBuilder: (context, index) {
-                    print("EOAAPAAPAPP");
-    print(pacientesDoctoresFiltrados);
-                final pacienteDoctor = pacientesDoctoresFiltrados[index];
-                return ListTile(
-                  title: Text(
-                      '${pacienteDoctor.nombre} ${pacienteDoctor.apellido}'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          updatePacienteDoctor(pacienteDoctor);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          deletePacienteDoctor(pacienteDoctor.idPersona);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            shrinkWrap: true,
+            itemCount: pacientesDoctoresFiltrados.length,
+            itemBuilder: (context, index) {
+              final pacienteDoctor = pacientesDoctoresFiltrados[index];
+              return ListTile(
+                title: Text(
+                  '${pacienteDoctor.nombre} ${pacienteDoctor.apellido}',
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => EditarPacienteDoctorScreen(
+                              pacienteDoctor: pacienteDoctor,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        deletePacienteDoctor(pacienteDoctor.idPersona);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           ],
         ),
       ),

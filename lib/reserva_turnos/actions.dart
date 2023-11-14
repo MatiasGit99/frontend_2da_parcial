@@ -29,7 +29,8 @@ class TurnoDatabaseProvider {
             fecha TEXT,
             horario TEXT,
             paciente_nombre TEXT,
-            doctor_nombre TEXT
+            doctor_nombre TEXT,
+            flagEstado TEXT NOT NULL DEFAULT 'Activo'
           )
         ''');
       },

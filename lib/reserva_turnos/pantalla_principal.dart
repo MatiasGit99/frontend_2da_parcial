@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/pantalla_agregar.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
@@ -33,10 +34,23 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
   }
 
   Future<void> getTurnos() async {
+    // Get the current date
+    DateTime currentDate = DateTime.now();
+    // Format the date to match the format used in your data
+    String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+
     final listaTurnos = await TurnoDatabaseProvider().getAllTurnos();
+
+    // Filter the turnos to show only those for the current day
+    final List<Turno> turnosForCurrentDay = listaTurnos
+        .where((turno) =>
+            turno.fecha != null &&
+            turno.fecha!.toString().substring(0, 10) == formattedDate)
+        .toList();
+
     setState(() {
       turnos = listaTurnos;
-      turnosFiltrados = listaTurnos;
+      turnosFiltrados = turnosForCurrentDay;
     });
   }
 
@@ -71,36 +85,28 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
     });
   }
 
-  // Función asincrónica para obtener el PacienteDoctor por su ID
-  // Future<void> obtenerPacientePorId(int idPaciente) async {
-  //   final pacienteDoctor = await PacienteDoctorDatabaseProvider()
-  //       .getPacienteDoctorById(idPaciente);
-  //   setState(() {
-  //     this.pacienteSelect =
-  //         (pacienteDoctor!.nombre + " " + pacienteDoctor!.apellido)!;
-  //   });
-  // }
-
-  // // Función asincrónica para obtener el Médico por su ID
-  // Future<void> obtenerMedicoPorId(int idDoctor) async {
-  //   final medico =
-  //       await PacienteDoctorDatabaseProvider().getPacienteDoctorById(idDoctor);
-  //   setState(() {
-  //     doctorSelect = (medico!.nombre + " " + medico!.apellido)!;
-  //   });
-  // }
-
-  // Future<void> insertTurno() async {
-  //   final nuevaTurno =
-  //       Turno(idTurno: null, descripcion: 'Nueva Categoría');
-  //   await TurnoDatabaseProvider().insertTurno(nuevaTurno);
-  //   getTurnos();
-  // }
-
   Future<void> updateTurno(Turno Turno) async {
     await TurnoDatabaseProvider().updateTurno(Turno);
     getTurnos();
   }
+
+  Future<void> cancelarTurno(int? idTurno) async {
+    if (idTurno != null) {
+      // Buscar el turno correspondiente en la lista
+      Turno turnoSeleccionado = turnosFiltrados.firstWhere(
+        (turno) => turno.idTurno == idTurno,
+      );
+
+      // Actualizar el flagEstado a "Cancelado"
+      turnoSeleccionado.flagEstado = 'Cancelado';
+
+      // Actualizar la base de datos u otras operaciones necesarias
+      await TurnoDatabaseProvider().updateTurno(turnoSeleccionado);
+
+      // Actualizar la lista y refrescar la interfaz
+      getTurnos();
+    }
+}
 
   Future<void> deleteTurno(int? idTurno) async {
     if (idTurno != null) {
@@ -108,7 +114,6 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
       getTurnos();
     }
   }
-
   void filterCategorias(String searchText) {
     setState(() {
       turnosFiltrados = turnos.where((turnos) {
@@ -137,7 +142,7 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
     });
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -178,17 +183,6 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
                     );
                   }).toList(),
                 ),
-                // SizedBox(width: 16), // Espaciado para separar los elementos
-                // Checkbox(
-                //   value: mostrarSoloDoctores,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       mostrarSoloDoctores = value!;
-                //       filterCategorias('');
-                //     });
-                //   },
-                // ),
-                // Text('Mostrar solo Doctores'),
               ],
             ),
             TextField(
@@ -197,34 +191,26 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
               },
               decoration: InputDecoration(labelText: 'Buscar'),
             ),
-
-            // Aquí puedes mostrar la lista de categorías.
+            // Aquí puedes mostrar la lista de turnos.
             ListView.builder(
               shrinkWrap: true,
               itemCount: turnosFiltrados.length,
               itemBuilder: (BuildContext context, index) {
-                final turno = turnosFiltrados[index]; 
-                // obtenerPacientePorId(turno.paciente);
-                // obtenerMedicoPorId(turno.doctor);
+                final turno = turnosFiltrados[index];
                 return ListTile(
                   title: Text('Paciente: ${turno.paciente_nombre}'),
                   subtitle: Text(
-                      'Médico: ${turno.doctor_nombre} Fecha-Hora: ${DateFormat('dd/MM/yyyy').format(turno.fecha)} - ${turno.horario}'),
+                      'Médico: ${turno.doctor_nombre} Fecha-Hora: ${DateFormat('dd/MM/yyyy').format(turno.fecha)} - ${turno.horario} Estado: ${turno.flagEstado}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          // Obtén la categoría que deseas editar, puedes hacerlo a través de una consulta a la base de datos o como lo necesites.
-                          // final turnoAEditar = Turno(
-                          // idTurno: categoria.idCategoria,// asigna el ID de la categoría que deseas editar,
-                          // descripcion: categoria.descripcion,);
-
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                          //   return EditarTurnoScreen(turno: turno); // Pasa el turno a editar a la pantalla de edición
-                          // }));
-                        },
+                        icon: Icon(Icons.delete),
+                        onPressed: turno.flagEstado != 'Cancelado'
+                            ? () {
+                                cancelarTurno(turno.idTurno);
+                              }
+                            : null, // Si está cancelado, deshabilitar el botón
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
@@ -233,7 +219,7 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
                         },
                       ),
                     ],
-                  ),  
+                  ),
                 );
               },
             ),
