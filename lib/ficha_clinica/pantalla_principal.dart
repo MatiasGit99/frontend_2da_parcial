@@ -86,12 +86,12 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
     });
   }
 
-  void exportToExcel(List<FichaClinica> data) async {
-    final excel = Excel.createExcel();
-    final sheet = excel[
-        'FichasClinicas']; // Cambia el nombre de la hoja a 'FichasClinicas'
+void exportToExcel(List<FichaClinica> data) async {
+  final excel = Excel.createExcel();
+  final sheet = excel['Sheet1']; 
 
-    // Agrega encabezados
+  // Agrega tus datos
+  for (final fichaClinica in data) {
     sheet.appendRow([
       'ID',
       'Fecha Desde',
@@ -103,36 +103,39 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
       'ID Paciente',
       'ID Categoría'
     ]);
-
-    // Agrega tus datos
-    for (final fichaClinica in data) {
-      sheet.appendRow([
-        fichaClinica.idFichaClinica,
-        fichaClinica.fechaDesde,
-        fichaClinica.fechaHasta,
-        fichaClinica.motivoConsulta,
-        fichaClinica.observacion,
-        fichaClinica.diagnostico,
-        fichaClinica.doctor_nombre,
-        fichaClinica.paciente_nombre,
-        fichaClinica.idCategoria_nombre
-      ]);
-    }
-
-    // Guarda el archivo Excel en el directorio de documentos
-    final directory = await getApplicationDocumentsDirectory();
-    final fileName = 'fichasClinicas.xlsx';
-    final downloadsDirectory = '/storage/emulated/0/Download';
-    final filePath = '$downloadsDirectory/$fileName';
-
-    final excelData = await excel.encode(); // Espera la finalización del Future
-
-    if (excelData != null) {
-      await File(filePath).writeAsBytes(excelData);
-    } else {
-      print('Error al exportar a Excel'); // Manejo de errores
-    }
+    break; // Agrega los encabezados solo una vez al inicio del documento
   }
+
+  // Agrega los datos reales debajo de los encabezados
+  for (final fichaClinica in data) {
+    sheet.appendRow([
+      fichaClinica.idFichaClinica.toString(),
+      fichaClinica.fechaDesde.toString(),
+      fichaClinica.fechaHasta.toString(),
+      fichaClinica.motivoConsulta,
+      fichaClinica.observacion,
+      fichaClinica.diagnostico,
+      fichaClinica.doctor_nombre,
+      fichaClinica.paciente_nombre,
+      fichaClinica.idCategoria_nombre
+    ]);
+  }
+
+  // Guarda el archivo Excel en el directorio de documentos
+  final directory = await getApplicationDocumentsDirectory();
+  final fileName = 'fichasClinicas.xlsx';
+  final downloadsDirectory = '/storage/emulated/0/Download';
+  final filePath = '$downloadsDirectory/$fileName';
+
+  final excelData = await excel.encode(); 
+  if (excelData != null) {
+    await File(filePath).writeAsBytes(excelData);
+  } else {
+    print('Error al exportar a Excel');
+  }
+}
+
+
 
   void exportToPDF(List<FichaClinica> data) async {
     final pdf = pw.Document();
