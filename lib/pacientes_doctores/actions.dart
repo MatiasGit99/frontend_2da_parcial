@@ -54,7 +54,6 @@ class PacienteDoctorDatabaseProvider {
 
   Future<void> insertPacienteDoctor(PacienteDoctor pacienteDoctor) async {
     final db = await database;
-    print("NONONON");
     print(pacienteDoctor.idPersona);
     await db.insert('pacientes_doctores', pacienteDoctor.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);

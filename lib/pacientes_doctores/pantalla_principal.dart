@@ -178,7 +178,7 @@ class _AdministracionPacientesDoctoresScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                      ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                   return AgregarPacienteDoctorForm();
@@ -252,6 +252,8 @@ class _AdministracionPacientesDoctoresScreenState
               shrinkWrap: true,
               itemCount: pacientesDoctoresFiltrados.length,
               itemBuilder: (context, index) {
+                    print("EOAAPAAPAPP");
+    print(pacientesDoctoresFiltrados);
                 final pacienteDoctor = pacientesDoctoresFiltrados[index];
                 return ListTile(
                   title: Text(

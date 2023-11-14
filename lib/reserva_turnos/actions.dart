@@ -27,7 +27,9 @@ class TurnoDatabaseProvider {
             idPaciente INTEGER,
             idDoctor INTEGER,
             fecha TEXT,
-            horario TEXT
+            horario TEXT,
+            paciente_nombre TEXT,
+            doctor_nombre TEXT
           )
         ''');
       },
