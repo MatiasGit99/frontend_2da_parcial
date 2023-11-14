@@ -2,7 +2,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-    android:requestLegacyExternalStorage="true" // add this line
         android:label="frontend_2da_parcial"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
