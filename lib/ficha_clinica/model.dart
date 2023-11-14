@@ -50,7 +50,7 @@ class FichaClinica {
   Map<String, dynamic> toJson() => {
         'idFichaClinica': idFichaClinica,
         'fechaDesde': fechaDesde.toIso8601String(),
-        'fechaInicio': fechaDesde.toIso8601String(),
+        'fechaHasta': fechaDesde.toIso8601String(),
         'motivoConsulta': motivoConsulta,
         'observacion': observacion,
         'diagnostico': diagnostico,
