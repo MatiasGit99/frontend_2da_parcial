@@ -4,6 +4,7 @@ import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/model.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/pantalla_agregar.dart';
+import 'package:frontend_2da_parcial/reserva_turnos/pantalla_editar.dart';
 import 'package:intl/intl.dart';
 
 class ReservaTurnosScreen extends StatefulWidget {
@@ -95,19 +96,19 @@ class _ReservaTurnosScreenState extends State<ReservaTurnosScreen> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // IconButton(
-                      //   icon: Icon(Icons.edit),
-                      //   onPressed: () {
-                      //     // Obtén la categoría que deseas editar, puedes hacerlo a través de una consulta a la base de datos o como lo necesites.
-                      //     final turnoAEditar = Turno(
-                      //     idTurno: Turno.idTurno,// asigna el ID de la categoría que deseas editar,
-                      //     descripcion: Turno.descripcion,);
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          // Obtén la categoría que deseas editar, puedes hacerlo a través de una consulta a la base de datos o como lo necesites.
+                          // final turnoAEditar = Turno(
+                          // idTurno: categoria.idCategoria,// asigna el ID de la categoría que deseas editar,
+                          // descripcion: categoria.descripcion,);
 
-                      //     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                      //       return EditarTurnoScreen(Turno: TurnoAEditar); // Pasa la categoría a editar a la pantalla de edición
-                      //     }));
-                      //   },
-                      // ),
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                            return EditarTurnoScreen(turno: turno); // Pasa el turno a editar a la pantalla de edición
+                          }));
+                        },
+                      ),
                       IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
