@@ -8,9 +8,12 @@ class FichaClinica {
   String motivoConsulta;
   String observacion;
   String diagnostico;
-  Persona idDoctor;
-  Persona idPaciente;
-  Categoria idCategoria;
+  int idDoctor;
+  int idPaciente;
+  String paciente_nombre;
+  String doctor_nombre;
+  int idCategoria;
+  String idCategoria_nombre;
 
   FichaClinica({
     this.idFichaClinica,
@@ -22,6 +25,10 @@ class FichaClinica {
     required this.idDoctor,
     required this.idPaciente,
     required this.idCategoria,
+    required this.paciente_nombre,
+    required this.doctor_nombre,
+    required this.idCategoria_nombre,
+
   });
 
   factory FichaClinica.fromJson(Map<String, dynamic> json) => FichaClinica(
@@ -31,9 +38,13 @@ class FichaClinica {
         motivoConsulta: json['motivoConsulta'],
         observacion: json['observacion'],
         diagnostico: json['diagnostico'],
-        idDoctor: Persona.fromJson(json['idDoctor']),
-        idPaciente: Persona.fromJson(json['idPaciente']),
-        idCategoria: Categoria.fromJson(json['idCategoria']),
+        idDoctor: json['idDoctor'],
+        idPaciente: json['idPaciente'],
+        idCategoria: json['idCategoria'],
+        paciente_nombre: json['paciente_nombre'],
+        doctor_nombre: json['doctor_nombre'],
+        idCategoria_nombre: json['idCategoria_nombre'],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,9 +54,12 @@ class FichaClinica {
         'motivoConsulta': motivoConsulta,
         'observacion': observacion,
         'diagnostico': diagnostico,
-        'idDoctor': idDoctor.toJson(),
-        'idPaciente': idPaciente.toJson(),
-        'idCategoria': idCategoria.toJson(),
+        'idDoctor': idDoctor,
+        'idPaciente': idPaciente,
+        'idCategoria': idCategoria,
+        'paciente_nombre': paciente_nombre,
+        'doctor_nombre': doctor_nombre,
+        'idCategoria_nombre': idCategoria_nombre,
       };
 }
 

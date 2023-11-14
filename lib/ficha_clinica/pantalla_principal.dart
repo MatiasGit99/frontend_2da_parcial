@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
-import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
-import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
-import 'package:frontend_2da_parcial/ficha_clinica/model.dart';  // Importa el nuevo modelo
-import 'package:frontend_2da_parcial/reserva_turnos/pantalla_agregar.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/model.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/actions.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/pantalla_agregar.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'package:excel/excel.dart';
+import 'dart:io'; // Añade esta línea para importar la biblioteca dart:io
 
 class FichaClinicaScreen extends StatefulWidget {
   set doctorSelect(String doctorSelect) {}
@@ -34,20 +36,6 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
     });
   }
 
-  // Funciones asincrónicas para obtener el PacienteDoctor por su ID y el Médico por su ID
-  Future<void> obtenerPacientePorId(int idPaciente) async {
-    final pacienteDoctor = await PacienteDoctorDatabaseProvider().getPacienteDoctorById(idPaciente);
-    setState(() {
-      this.pacienteSelect = (pacienteDoctor!.nombre +" "+ pacienteDoctor!.apellido)!;
-    });
-  }
-
-  Future<void> obtenerMedicoPorId(int idDoctor) async {
-    final medico = await PacienteDoctorDatabaseProvider().getPacienteDoctorById(idDoctor);
-    setState(() {
-      doctorSelect = (medico!.nombre +" "+ medico!.apellido)!;
-    });
-  }
 
   Future<void> updateFichaClinica(FichaClinica fichaClinica) async {
     await FichaClinicaDatabaseProvider().updateFichaClinica(fichaClinica);  // Cambia la llamada a TurnoDatabaseProvider por FichaClinicaDatabaseProvider
@@ -79,9 +67,9 @@ class _FichaClinicaScreenState extends State<FichaClinicaScreen> {
       fichaClinica.motivoConsulta,
       fichaClinica.observacion,
       fichaClinica.diagnostico,
-      fichaClinica.idDoctor.idPersona,
-      fichaClinica.idPaciente.idPersona,
-      fichaClinica.idCategoria.idCategoria
+      fichaClinica.doctor_nombre,
+      fichaClinica.paciente_nombre,
+      fichaClinica.idCategoria_nombre
     ]);
   }
 
@@ -126,9 +114,9 @@ void exportToPDF(List<FichaClinica> data) async {
               pw.Text('Motivo Consulta: ${fichaClinica.motivoConsulta}'),
               pw.Text('Observación: ${fichaClinica.observacion}'),
               pw.Text('Diagnóstico: ${fichaClinica.diagnostico}'),
-              pw.Text('ID Doctor: ${fichaClinica.idDoctor.idPersona}'),
-              pw.Text('ID Paciente: ${fichaClinica.idPaciente.idPersona}'),
-              pw.Text('ID Categoría: ${fichaClinica.idCategoria.idCategoria}'),
+              pw.Text('ID Doctor: ${fichaClinica.doctor_nombre}'),
+              pw.Text('ID Paciente: ${fichaClinica.paciente_nombre}'),
+              pw.Text('ID Categoría: ${fichaClinica.idCategoria_nombre}'),
               pw.Divider(),
             ],
           );
@@ -179,8 +167,8 @@ void exportToPDF(List<FichaClinica> data) async {
               itemCount: fichasClinicas.length,
               itemBuilder: (BuildContext context, index) {
                 final fichaClinica = fichasClinicas[index];
-                obtenerPacientePorId(fichaClinica.idPaciente.idPersona);  // Cambia la propiedad paciente por idPaciente
-                obtenerMedicoPorId(fichaClinica.idDoctor.idPersona);  // Cambia la propiedad doctor por idDoctor
+                // obtenerPacientePorId(fichaClinica.idPaciente.idPersona);  // Cambia la propiedad paciente por idPaciente
+                // obtenerMedicoPorId(fichaClinica.idDoctor.idPersona);  // Cambia la propiedad doctor por idDoctor
                 return ListTile(
                   title: Text(
                       'Paciente: $pacienteSelect'),
@@ -203,7 +191,7 @@ void exportToPDF(List<FichaClinica> data) async {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return AgregarTurnoForm();
+                  return AgregarFichaClinicaForm();
                 }));
               },
               child: Text('Agregar Ficha'),

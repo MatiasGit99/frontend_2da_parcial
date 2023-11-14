@@ -33,9 +33,9 @@ class FichaClinicaDatabaseProvider {
             idDoctor INTEGER,
             idPaciente INTEGER,
             idCategoria INTEGER,
-            FOREIGN KEY (idDoctor) REFERENCES personas(idPersona),
-            FOREIGN KEY (idPaciente) REFERENCES personas(idPersona),
-            FOREIGN KEY (idCategoria) REFERENCES categorias(idCategoria)
+            paciente_nombre TEXT,
+            doctor_nombre TEXT,
+            idCategoria_nombre TEXT
           )
         ''');
       },

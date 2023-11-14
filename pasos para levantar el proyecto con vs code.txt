@@ -13,6 +13,7 @@ flutter doctor --android -licenses
 start ms-settings:developers
 
 ir a vscode y en la esquina inferior derecha seleccionar el dispositivo android
+instalar la extension para flutter
 clic sobre main.dart y seleccionar run without debugging
 
 ---Pasos para  instalar el pdf y excel reader en el emulador de android studio

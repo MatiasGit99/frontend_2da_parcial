@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/reserva_turnos/pantalla_principal.dart';
 import 'administracion_categorias/pantalla_principal.dart';
 import 'pacientes_doctores/pantalla_principal.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/pantalla_principal.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -24,7 +26,6 @@ class ClientListScreen extends StatefulWidget {
 }
 
 class _ClientListScreenState extends State<ClientListScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -61,12 +62,15 @@ class _ClientListScreenState extends State<ClientListScreen> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                   return ReservaTurnosScreen(); // Navegar a la nueva pantalla
-                }));// Acción para 'Reserva de turnos'
+                })); // Acción para 'Reserva de turnos'
               },
               child: Text('Reserva de turnos'),
             ),
             ElevatedButton(
               onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return FichaClinicaScreen(); // Navegar a la nueva pantalla
+                })); // Acción para 'Reserva de turnos'
                 // Acción para 'Ficha clínica'
               },
               child: Text('Ficha clínica'),

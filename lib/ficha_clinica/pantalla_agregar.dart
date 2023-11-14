@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/actions.dart';
 import 'package:frontend_2da_parcial/pacientes_doctores/model.dart';
-import 'package:frontend_2da_parcial/reserva_turnos/actions.dart';
-import 'package:frontend_2da_parcial/reserva_turnos/model.dart';
-import 'package:frontend_2da_parcial/reserva_turnos/pantalla_principal.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/actions.dart';
+import 'package:frontend_2da_parcial/administracion_categorias/model.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/actions.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/model.dart';
+import 'package:frontend_2da_parcial/ficha_clinica/pantalla_principal.dart';
 import 'package:intl/intl.dart';
 
 class AgregarFichaClinicaForm extends StatefulWidget {
   @override
-  _AgregarFichaClinicaFormState createState() => _AgregarFichaClinicaFormState();
+  _AgregarFichaClinicaFormState createState() =>
+      _AgregarFichaClinicaFormState();
 }
 
 class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
@@ -95,7 +98,6 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
               }).toList(),
               decoration: InputDecoration(labelText: 'Médico'),
             ),
-
             DropdownButtonFormField<PacienteDoctor>(
               value: pacienteSeleccionado,
               onChanged: (PacienteDoctor? newValue) {
@@ -111,7 +113,6 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
               }).toList(),
               decoration: InputDecoration(labelText: 'Paciente'),
             ),
-
             DropdownButtonFormField<Categoria>(
               value: categoriaSeleccionada,
               onChanged: (Categoria? newValue) {
@@ -127,7 +128,6 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
               }).toList(),
               decoration: InputDecoration(labelText: 'Categoría'),
             ),
-
             Row(
               children: [
                 Text('Fecha Desde: '),
@@ -139,7 +139,6 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
                 ),
               ],
             ),
-
             Row(
               children: [
                 Text('Fecha Hasta: '),
@@ -151,29 +150,39 @@ class _AgregarFichaClinicaFormState extends State<AgregarFichaClinicaForm> {
                 ),
               ],
             ),
-
             ElevatedButton(
               onPressed: () {
                 // Guardar la nueva ficha clínica en la base de datos.
                 int paciente = pacienteSeleccionado!.idPersona!;
                 int doctor = doctorSeleccionado!.idPersona!;
+                String doctor_nombre = doctorSeleccionado!.nombre!;
+                String paciente_nombre = pacienteSeleccionado!.nombre!;
                 int categoria = categoriaSeleccionada!.idCategoria!;
+                String idCategoria_nombre = categoriaSeleccionada!.descripcion!;
+
                 final nuevaFichaClinica = FichaClinica(
                   fechaDesde: fechaDesdeSeleccionada,
                   fechaHasta: fechaHastaSeleccionada,
-                  motivoConsulta: 'Motivo de Consulta', // Puedes modificar este valor según tus necesidades
-                  observacion: 'Observación', // Puedes modificar este valor según tus necesidades
-                  diagnostico: 'Diagnóstico', // Puedes modificar este valor según tus necesidades
-                  idDoctor: doctorSeleccionado!,
-                  idPaciente: pacienteSeleccionado!,
-                  idCategoria: categoriaSeleccionada!,
+                  motivoConsulta:
+                      'Motivo de Consulta', // Puedes modificar este valor según tus necesidades
+                  observacion:
+                      'Observación', // Puedes modificar este valor según tus necesidades
+                  diagnostico:
+                      'Diagnóstico', // Puedes modificar este valor según tus necesidades
+                  idDoctor: doctor,
+                  idPaciente: paciente,
+                  idCategoria: categoria,
+                  paciente_nombre: paciente_nombre,
+                  doctor_nombre: doctor_nombre,
+                  idCategoria_nombre: idCategoria_nombre,
                 );
 
-                FichaClinicaDatabaseProvider().insertFichaClinica(nuevaFichaClinica);
+                FichaClinicaDatabaseProvider()
+                    .insertFichaClinica(nuevaFichaClinica);
 
                 // Después de la inserción, navega a la pantalla de administración de categorías
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return ReservaTurnosScreen(); // Navegar a la nueva pantalla
+                  return FichaClinicaScreen(); // Navegar a la nueva pantalla
                 }));
               },
               child: Text('Guardar Ficha Clínica'),
